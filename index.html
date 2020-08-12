@@ -6,19 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/1ed641f7ad.js" crossorigin="anonymous"></script>
     <title>MEME GENERATOR</title>
 </head>
 
-<body onload="init()">
-    <header>
-
+<body id="body" onload="init()">
+    <header class="main-header">
+        <div class="container flex space-between align-center">
+            <div class="logo">MEME GENERATOR</div>
+            <ul class="main-nav clean-list flex">
+                <li><button onclick="onBackToGallery()">Back To Gallery</button></li>
+                <li><button>Memes</button></li>
+                <li><button>About</button></li>
+            </ul>
+            <!-- <button hidden class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <button hidden class="mobile-close-btn" onclick="toggleMenu()">X</button> -->
+        </div>
     </header>
-    <section class="image-gallery"></section>
-    <section class="meme-editor"></section>
-    <!-- <canvas id="myCanvas" width="400" height="300"></canvas> -->
 
+    <div class="meme-editor container">
+        <canvas id="canvas" width="550" height="300"></canvas>
+        <div class="actions">
+            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)" class="input-text"
+                placeholder="Your Text: " />
+            <button onclick="onAddLine()"><i class="fas fa-plus"></i></button>
+            <button onclick="onDecrease()"><i class="fas fa-text-height"></i>+</button>
+            <button onclick="onIncrease()"><i class="fas fa-text-height"></i>-</button>
+            <button onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button>
+            <button onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button>
+            <button onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></i></button>
+            <button class="btn-color" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
+            <button class="color display"> <input type="color" id="shape-color" name="contact"
+                    onchange="onChangeColor(this.value)" /></button>
+            <button class="btn-font"><i class="fas fa-font"></i></button>
+            <select class="font-select" onclick="onChangeFont(this.value)">
+                <option value="impact">Impact</option>
+                <option value="Eurofurenceregular">Eurofurenceregular</option>
+                <option value="Amatic_SC">Amatic_SC</option>
+                <option value="Rowdies">Rowdies</option>
+                <option value="Suez_One">Suez_One</option>
+            </select>
+
+
+
+            <button onclick="onSave()"><i class="far fa-save"></i></button>
+            <button><a href="#" onclick="onDownload(this)" download="my-img.jpg"><i
+                        class="fas fa-download"></i></a></button>
+
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="btn" type="submit"><i class="fas fa-share"></i></button>
+                <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg"></a>
+                <div class="share-container"></div>
+            </form>
+
+
+
+            <!-- <button><a href="#" onclick="onShare(this)" download="my-img.jpg"><i class="fas fa-share"></i></a></button> -->
+            <!-- <button onclick="onSwitchLines()">Switch Lines</button> -->
+
+        </div>
+    </div>
+    <div class="gallery container">
+        <div class= "flex space-between">
+            <input type="text" class="search-text" placeholder="Eneter serch keyword: " />
+            <section class="key-words">
+                <button>Happy</button>
+                <button>Joy</button>
+                <button>Joy</button>
+                <button>Joy</button>
+                <button onclick="onMoreKeyWords()">more</button>
+            </section>
+        </div>
+        <div class="image-gallery container"></div>
+    </div>
+
+    <footer class="main-footer space-between">
+        <div class="container flex">
+            <div class="logo">MEME GENERATOR</div>
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/storage-service.js"></script>
+    <script src="js/meme-service.js"></script>
+    <script src="js/meme-controller.js"></script>
+    <script src="js/canvas-service.js"></script>
+    <script src="js/canvas-controller.js"></script>
+
 </body>
 
 </html>
