@@ -15,71 +15,83 @@
         <div class="container flex space-between align-center">
             <div class="logo">MEME GENERATOR</div>
             <ul class="main-nav clean-list flex">
-                <li><button onclick="onBackToGallery()">Back To Gallery</button></li>
-                <li><button>Memes</button></li>
+                <li><button onclick="onBackToGallery()">Gallery</button></li>
+                <li><button onclick="onOpenMememsGallery()">Memes</button></li>
                 <li><button>About</button></li>
             </ul>
-            <!-- <button hidden class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-            <button hidden class="mobile-close-btn" onclick="toggleMenu()">X</button> -->
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <button class="mobile-close-btn" onclick="toggleMenu()">X</button>
         </div>
     </header>
 
-    <div class="meme-editor container">
-        <canvas id="canvas" width="550" height="300"></canvas>
+    <div class="meme-editor display container flex">
+        <!-- <div class="canvas-container"> -->
+            <canvas id="canvas" width="400" height="400"></canvas>
+        <!-- </div> -->
         <div class="actions">
-            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)" class="input-text"
+            <div class="action1 stickers flex">
+                <img onclick="addSticker(this)" class="sticker" src="stickers/1.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/2.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/3.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/4.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/5.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/6.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/7.png" />
+                <img onclick="addSticker(this)" class="sticker" src="stickers/8.png" />
+            </div>
+            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)" class="input-text action2"
                 placeholder="Your Text: " />
-            <button onclick="onAddLine()"><i class="fas fa-plus"></i></button>
-            <button onclick="onDecrease()"><i class="fas fa-text-height"></i>+</button>
-            <button onclick="onIncrease()"><i class="fas fa-text-height"></i>-</button>
-            <button onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button>
-            <button onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button>
-            <button onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></i></button>
-            <button class="btn-color" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
-            <button class="color display"> <input type="color" id="shape-color" name="contact"
+            <button class="action3" onclick="onAddLine()"><i class="fas fa-plus"></i></button>
+            <button class="action4" onclick="onIncrease()"><i class="fas fa-font"></i>+</button>
+            <button class="action5" onclick="onDecrease()"><i class="fas fa-font"></i>-</button>
+            <button class="action6" onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button>
+            <button class="action7" onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button>
+            <button class="action8 btn-color" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
+            <button class="action9 color display"> <input type="color" id="shape-color" name="contact"
                     onchange="onChangeColor(this.value)" /></button>
-            <button class="btn-font"><i class="fas fa-font"></i></button>
-            <select class="font-select" onclick="onChangeFont(this.value)">
+            <!-- <button class="action10 btn-font "><i class="fas fa-font"></i></button> -->
+            <select class="action11 font-select" onclick="onChangeFont(this.value)">
                 <option value="impact">Impact</option>
                 <option value="Eurofurenceregular">Eurofurenceregular</option>
                 <option value="Amatic_SC">Amatic_SC</option>
                 <option value="Rowdies">Rowdies</option>
                 <option value="Suez_One">Suez_One</option>
             </select>
-
-
-
-            <button onclick="onSave()"><i class="far fa-save"></i></button>
-            <button><a href="#" onclick="onDownload(this)" download="my-img.jpg"><i
-                        class="fas fa-download"></i></a></button>
-
-            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+            <button class="action12" onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></button>
+            <!-- <button onclick="onSwitchLines()"><i class="fas fa-arrows-alt-v"></i></button> -->
+            <button class="btn-save btn-final-action action13" onclick="onSave()">Save</button>
+            
+            <button class="btn-down btn-final-action action14"><a href="#" onclick="onDownload(this)" download="my-img.jpg">Download</a></button>
+            <form class="btn-share btn-final-action action15" class="upload" action="" method="POST" enctype="multipart/form-data"
+                onsubmit="uploadImg(this, event)">
                 <input name="img" id="imgData" type="hidden" />
-                <button class="btn" type="submit"><i class="fas fa-share"></i></button>
-                <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg"></a>
+                <button class="btn-share btn-final-action" type="submit">Share</button>
                 <div class="share-container"></div>
             </form>
-
-
-
-            <!-- <button><a href="#" onclick="onShare(this)" download="my-img.jpg"><i class="fas fa-share"></i></a></button> -->
-            <!-- <button onclick="onSwitchLines()">Switch Lines</button> -->
-
         </div>
     </div>
+
+
     <div class="gallery container">
-        <div class= "flex space-between">
-            <input type="text" class="search-text" placeholder="Eneter serch keyword: " />
+        <div class="flex space-between">
+            <div>
+                <label for="search">Search</label>
+                <input onchange="onFilterKeyWord(this.value)" list="search" id="mysearch" autocomplete="off"
+                    name="search" />
+                <datalist id="search"></datalist>
+            </div>
             <section class="key-words">
-                <button>Happy</button>
-                <button>Joy</button>
-                <button>Joy</button>
-                <button>Joy</button>
+                <button onclick="onKeyWord(this)">Happy</button>
+                <button onclick="onKeyWord(this)">animals</button>
+                <button onclick="onKeyWord(this)">animals</button>
+                <button onclick="onKeyWord(this)">animals</button>
+                <button onclick="onKeyWord(this)">animals</button>
                 <button onclick="onMoreKeyWords()">more</button>
             </section>
         </div>
         <div class="image-gallery container"></div>
     </div>
+
 
     <footer class="main-footer space-between">
         <div class="container flex">
@@ -87,10 +99,9 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/gallery-controller.js"></script>
     <script src="js/storage-service.js"></script>
     <script src="js/meme-service.js"></script>
-    <script src="js/meme-controller.js"></script>
     <script src="js/canvas-service.js"></script>
     <script src="js/canvas-controller.js"></script>
 
