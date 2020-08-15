@@ -7,64 +7,70 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/1ed641f7ad.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="imgs/icongif.gif" type="image/gif" sizes="16x16">
     <title>MEME GENERATOR</title>
 </head>
 
 <body id="body" onload="init()">
-    <div class="modal">
-        <h2>We are MEME GENERETOR</h2>
-        <p>Insert your own idea for meme and share it with your friends!</p>
-        <p>Are you satisfied from website?
+    <div class="screen" onclick="toggleMenu()"></div>
+    <div class="modal slide-in-fwd-tr">
+        <h2  data-trans="meme">We are MEME GENERETOR</h2>
+        <p data-trans="email-data1">Insert your own idea for meme and share it with your friends!</p>
+        <p data-trans="email-data2">Are you satisfied from website?
             Tell us by email:</p>
         <form id="frmPref">
-            <div class="email-form">
-                <label for="email"></label>
-                <input type="email" class="email" name="email" />
-                <button class="btn-submit" onclick="toggleModal()" type="button" form="frmPref" value="Submit">Submit</button>
+            <div class="form-group">
+                <label data-trans="subject" for="exampleFormControlInput1">Subject</label>
+                <input class="form-control email-subject" placeholder="">
+            </div>
+            <div class="form-group">
+                <label data-trans="body" for="exampleFormControlTextarea1">Message Body</label>
+                <textarea class="form-control email-mess-body" rows="3"></textarea>
             </div>
         </form>
-        <button class="btn-close" onclick="toggleModal()">Close</button>
+        <button data-trans="submit" class="btn-submit" onclick="onSubmitMail()" type="button" form="frmPref" value="Submit">Submit</button>
+        <button data-trans="close" class="btn-close" onclick="toggleModal()">Close</button>
     </div>
+
     <header class="main-header">
         <div class="container flex space-between align-center">
             <div class="logo">MEME GENERATOR</div>
             <ul class="main-nav clean-list flex">
-                <li><button onclick="onBackToGallery()">Gallery</button></li>
-                <li><button onclick="onOpenMememsGallery()">Memes</button></li>
-                <li><button onclick="toggleModal()">About</button></li>
+                <li><button data-trans="gallery" class="btn-header" onclick="onBackToGallery()">Gallery</button></li>
+                <li><button data-trans="memes" class="btn-header" onclick="onOpenMememsGallery()">Memes</button></li>
+                <li><button data-trans="about" class="btn-header" onclick="toggleModal()">About</button></li>
             </ul>
             <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
             <button class="mobile-close-btn" onclick="toggleMenu()">X</button>
         </div>
     </header>
 
-    <div class="meme-editor display container flex">
-        <!-- <div class="canvas-container"> -->
-            <!-- <input type='file' id="fileUpload" /> -->
-            <canvas id="canvas" width="450" height="450"></canvas>
-        <!-- </div> -->
+    <div class="meme-editor bounce-in-top display container flex">
+        <canvas id="canvas" width="450" height="450"></canvas>
         <div class="actions flex">
-                <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)" class="input-text space-around action2"
-                placeholder="Your Text: " />
-                <div class="flex  space-evenly">
-                    <button class="action3" onclick="onAddLine()"><i class="fas fa-plus"></i></button>
-                    <button class="action12" onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></button>
-                </div>
-                <div class="flex space-evenly">
-                    <button class="action4" onclick="onIncrease()"><i class="fas fa-font"></i>+</button>
-                    <button class="action5" onclick="onDecrease()"><i class="fas fa-font"></i>-</button>
-                    <button class="action8 btn-color" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
-                    <button class="action9 color display"> <input type="color" id="shape-color" name="contact"
-                            onchange="onChangeColor(this.value)" /></button>
-                    <select class="action11 font-select" onclick="onChangeFont(this.value)">
-                        <option style="font-family: Impact" value="impact">Falafel פלאפל</option>
-                        <option style="font-family: Eurofurenceregular" value="Eurofurenceregular">Falafel פלאפל</option>
-                        <option style="font-family: Rowdies" value="Amatic_SC">Falafel פלאפל</option>
-                        <option style="font-family: Pacifico" value="Pacifico">Falafel פלאפל</option>
-                        <option style="font-family: Suez_One" value="Suez_One">Falafel פלאפל</option>
-                        <option style="font-family: CabinSketch" value="CabinSketch">Falafel פלאפל</option>
-                    </select>
-                </div>
+            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)"
+            class="input-text space-around action2"  data-trans="text-placeholder" placeholder="Your Text: " />
+            <div class="flex space-evenly">
+                <button class="action3" onclick="onAddLine()"><i class="fas fa-plus"></i></button>
+                <button class="action12" onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></button>
+                <!-- <button class="action6" onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button> -->
+                <!-- <button class="action7" onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button> -->
+            </div>
+            <div class="flex space-evenly">
+                <button class="action4" onclick="onIncrease()"><i class="fas fa-font"></i>+</button>
+                <button class="action5" onclick="onDecrease()"><i class="fas fa-font"></i>-</button>
+                <button class="action8 btn-color" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
+                <button class="action9 color display"> <input type="color" id="shape-color" name="contact"
+                        onchange="onChangeColor(this.value)" /></button>
+                <select class="action11 font-select" onclick="onChangeFont(this.value)">
+                    <option style="font-family: Impact" value="impact">Falafel פלאפל</option>
+                    <option style="font-family: Eurofurenceregular" value="Eurofurenceregular">Falafel פלאפל</option>
+                    <option style="font-family: Rowdies" value="Amatic_SC">Falafel פלאפל</option>
+                    <option style="font-family: Pacifico" value="Pacifico">Falafel פלאפל</option>
+                    <option style="font-family: Suez_One" value="Suez_One">Falafel פלאפל</option>
+                    <option style="font-family: CabinSketch" value="CabinSketch">Falafel פלאפל</option>
+                </select>
+            </div>
             <div class="action1 stickers flex">
                 <img onclick="addSticker(this)" class="sticker" src="stickers/1.png" />
                 <img onclick="addSticker(this)" class="sticker" src="stickers/2.png" />
@@ -75,45 +81,48 @@
                 <img onclick="addSticker(this)" class="sticker" src="stickers/7.png" />
                 <img onclick="addSticker(this)" class="sticker" src="stickers/8.png" />
             </div>
-            
-            <div hidden class="flex sticker-actions">
-                Sticker:
-                <button class="btn-increase-sti" onclick="onIncreasStickers()"><i class="fas fa-plus-square"></i></button>
-                <button class="btn-decreas-sti" onclick="onDecreasStickers()"><i class="fas fa-minus-square"></i></button>
+
+            <div hidden class="flex sticker-actions align-center">
+               <label>Sticker</label>
+                <button class="btn-increase-sti" onclick="onIncreasStickers()"><i
+                        class="fas fa-plus-square"></i></button>
+                <button class="btn-decreas-sti" onclick="onDecreasStickers()"><i
+                        class="fas fa-minus-square"></i></button>
                 <button class="btn-remove-sti" onclick="onDeleteSticker()"><i class="fas fa-trash-alt"></i></button>
             </div>
 
             <div class="flex space-evenly">
-                <button class="btn-save btn-final-action action13" onclick="onSave()">Save <i class="far fa-save"></i></button>
-                <button class="btn-down btn-final-action action14"><a href="#" onclick="onDownload(this)"
+                <button data-trans="save" class="btn-save btn-final-action action13" onclick="onSave()">Save <i
+                        class="far fa-save"></i></button>
+                <button data-trans="download" class="btn-down btn-final-action action14"><a href="#" onclick="onDownload(this)"
                         download="my-img.jpg">Download<i class="fas fa-download"></i></a></button>
                 <form class="btn-share btn-final-action action15" class="upload" action="" method="POST"
                     enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                     <input name="img" id="imgData" type="hidden" />
-                    <button class="btn-share btn-final-action" type="submit">Share <i class="fas fa-share-alt"></i></button>
+                    <button data-trans="share" class="btn-share btn-final-action" type="submit">Share <i
+                            class="fas fa-share-alt"></i></button>
                     <div class="share-container"></div>
                 </form>
             </div>
-            <button  class="btn-upload"> <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)"/>Upload Img <i class="fas fa-upload"></i></button>
-            <!-- <button class="action6" onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button> -->
-            <!-- <button class="action7" onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button> -->
-            <!-- <button class="action10 btn-font "><i class="fas fa-font"></i></button> -->
+            <button data-trans="upload" class="btn-upload"> <input type="file" class="file-input btn" name="image"
+                    onchange="onImgInput(event)" />Upload Img <i class="fas fa-upload"></i></button>
             <!-- <button onclick="onSwitchLines()"><i class="fas fa-arrows-alt-v"></i></button> -->
         </div>
     </div>
-
-
+    
+    
     <div class="gallery container">
+        <button type="button" value="he" class="btn-trans" onclick="onSetLang(this.value)">עברית</button>
+        <button type="button" value="en" class="btn-trans" onclick="onSetLang(this.value)">English</button>
         <div class="search-section flex space-between">
             <div>
-                <label for="search">Search</label>
+                <label data-trans="search" for="search">Search</label>
                 <input onchange="onFilterKeyWord(this.value)" list="search" id="mysearch" autocomplete="off"
-                    name="search" />
+                name="search" />
                 <datalist id="search"></datalist>
             </div>
             <section class="key-words"></section>
         </div>
-
         <div class="image-gallery container"></div>
     </div>
 
@@ -121,18 +130,22 @@
         <div class="container flex">
             <div class="logo">MEME GENERATOR</div>
             <section class="social">
-                <a class="social-facebook" href='#'><i class="fab fa-facebook-square"></i></a>
-                <a class="social-twitter" href='#'><i class="fab fa-twitter-square"></i></a>
-                <a class="social-instagram" href='#'><i class="fab fa-instagram"></i></a>
+                <a class="social-facebook" href="https://www.facebook.com/hilla.meri/" target="blank"><i
+                        class="fab fa-facebook-square"></i></a>
+                <a class="social-twitter"><i class="fab fa-twitter-square"></i></a>
+                <a class="social-instagram" href="https://www.instagram.com/hillameri/" target="blank"><i
+                        class="fab fa-instagram"></i></a>
             </section>
-            <small class="footer-copyrigths">© 2020 MemeGeneretor.com - All Rights Reserved - Hilla Meri</small>
+            <div>
+                <small class="footer-copyrigths">© 2020 MemeGeneretor.com - All Rights Reserved - Hilla Meri</small>
+                <button data-trans="share-page" class="btn-web-share">share page</button>
+            </div>
         </div>
     </footer>
 
     <script src="js/util-service.js"></script>
     <script src="js/i18n-service.js"></script>
     <script src="js/storage-service.js"></script>
-    <script src="js/canvas-service.js"></script>
     <script src="js/canvas-controller.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/gallery-service.js"></script>

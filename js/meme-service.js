@@ -132,6 +132,10 @@ function setCurrLineIdx(lineId) {
     document.querySelector('.input-text').value = gMeme.lines[gMeme.selectedLineIdx].txt;
 }
 
+function getCurrentLineIdx() {
+    return gMeme.lines.length;
+}
+
 function createSticker(id, url, size) {
     var canvasSize = getCanvasSize();
     return {
@@ -143,14 +147,13 @@ function createSticker(id, url, size) {
     }
 }
 
-function setPositionSticker(id, newX, newY) {
+function setPositionSticker(newX, newY) {
     gMeme.stickers.forEach(sticker => {
-        if (sticker.id === gMeme.selectedStickerIdx){
+        if (sticker.id === gMeme.selectedStickerIdx) {
             sticker.x = newX;
             sticker.y = newY;
-    }})
-    // gMeme.stickers[id].x = newX;
-    // gMeme.stickers[id].y = newY;
+        }
+    })
 }
 
 function getStickerSize(id) {
@@ -171,6 +174,11 @@ function deleteSticker() {
     })
 }
 
-function getMemesId(){
+function getMemesId() {
     return gId;
 }
+
+function setStickerIdx(id) {
+    gMeme.selectedStickerIdx = id;
+}
+

@@ -13,6 +13,8 @@ function openGellary() {
     elGallery.classList.remove('display');
     var elMemeEdit = document.querySelector('.meme-editor');
     elMemeEdit.classList.add('display');
+    var elFooter = document.querySelector('.main-footer');
+    elFooter.classList.remove('display');
 }
 
 function openCanvas() {
@@ -20,6 +22,8 @@ function openCanvas() {
     elGallery.classList.add('display');
     var elMemeEdit = document.querySelector('.meme-editor');
     elMemeEdit.classList.remove('display');
+    var elFooter = document.querySelector('.main-footer');
+    elFooter.classList.add('display');
 }
 
 function onBackToGallery() {
@@ -58,10 +62,6 @@ function onFilterKeyWord(keyWord) {
     renderKeyWordsSearch();
 }
 
-function toggleMenu() {
-    document.body.classList.toggle('menu-open');
-}
-
 function renderKeywords() {
     var keyWords = getKeyWords();
     var strHtmls = keyWords.map(function (keyWord) {
@@ -78,7 +78,7 @@ function renderKeyWordsSearch() {
         style="font-size:${keyWords[i].search}rem">${keyWords[i].word}</button>`
     }
     document.querySelector('.key-words').innerHTML = strHtmls;
-    var htmlCloseBtn = `<button class="more-btn" onclick="onAllKeyWords()">More</button>`;
+    var htmlCloseBtn = `<button data-trans="more" class="more-btn" onclick="onAllKeyWords()">More</button>`;
     document.querySelector('.key-words').innerHTML += htmlCloseBtn;
 }
 
@@ -93,15 +93,13 @@ function onAllKeyWords() {
     document.querySelector('.key-words').innerHTML += htmlCloseBtn;
 }
 
-
-function onCloseKeyWords(){
+function onCloseKeyWords() {
     renderKeyWordsSearch();
 }
 
 function onKeyWord(elKeyword) {
     onFilterKeyWord(elKeyword.innerText);
 }
-
 
 function onChooseMeme(elMeme) {
     openCanvas();
@@ -118,7 +116,57 @@ function clearInput() {
     elInput.value = '';
 }
 
-
 function toggleModal() {
     document.body.classList.toggle('modal-open');
 }
+
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
+}
+
+function onSubmitMail() {
+    toggleModal();
+    var subject = document.querySelector('.email-subject').value;
+    var messBody = document.querySelector('.email-mess-body').value;
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=hilla7070@gmail.com&su=${subject}&body=${messBody}`);
+}
+
+function onSetLang(lang) {
+    setLang(lang);
+    if (lang === 'he') {
+        document.body.classList.add('rtl')
+    } else {
+        document.body.classList.remove('rtl')
+    }
+    doTrans();
+}
+
+const shareData = {
+    title: 'Meme Generetor',
+    text: 'The best website!',
+    url: window.location.href,
+}
+  
+const btn = document.querySelector('.btn-web-share');
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.share(shareData)
+      console.log('MDN shared successfully');
+    } catch(err) {
+        console.log('Error: ' + err);
+    }
+  });
+
+window.onscroll = function () { scrollFunction() };
+  function scrollFunction() {
+      var ellBtns = document.querySelectorAll('.btn-header');
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+          ellBtns.forEach(function (btn) {
+              btn.style.height = '50px';
+          })
+      } else {
+          ellBtns.forEach(function (btn) {
+              btn.style.height = '80px';
+          })
+      }
+  }

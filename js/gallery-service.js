@@ -69,15 +69,17 @@ function getImgById(imgId) {
 
 function setKeywordSearch(word) {
     gKeyWords.find(keyword => {
-        if (keyword.word === word) keyword.search = keyword.search + 0.2;
+        if (keyword.word === word) {
+            if(keyword.search < 4)  keyword.search += 0.2;
+        }
     })
 }
 
-function addImg(url){
+function addImg(url) {
     var newImg = {
-        id: gImgs.length, 
-        url: url, 
-        keywords: [''] 
+        id: gImgs.length + 1,
+        url: url,
+        keywords: ['']
     }
     gImgs.push(newImg);
     return newImg.id;

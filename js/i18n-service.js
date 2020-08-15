@@ -2,63 +2,83 @@ var gCurrLang = 'en';
 
 var gTrans = {
     title: {
-        en: 'BOOKS SHOP',
-        he: 'חנות ספרים'
+        en: 'MEME GENERATOR',
+        he: 'מחולל ממים'
     },
-    'add-name-placeholder': {
-        en: 'Book Name:',
-        he: 'שם הספר:'
+    'gallery': {
+        en: 'Gallery',
+        he: 'גלריה'
     },
-    'add-price-placeholder': {
-        en: 'Book Price:',
-        he: 'מחיר הספר:'
+    'memes': {
+        en: 'Memes',
+        he: 'ממים'
     },
-    add: {
-        en: 'Add New Book',
-        he: 'הוסף ספר'
+    'about': {
+        en: 'About',
+        he: 'עלינו'
     },
-    name: {
-        en: 'NAME',
-        he: 'שם'
+    'search': {
+        en: 'Search',
+        he: 'חיפוש'
     },
-    price: {
-        en: 'PRICE💰',
-        he: '💰מחיר'
+    'share-page': {
+        en: 'share page',
+        he: 'שתף עמוד'
     },
-    rating: {
-        en: 'RATING❤',
-        he: '❤דירוג'
+    'text-placeholder': {
+        en: 'Your Text:',
+        he: 'הטקסט שלך:'
     },
-    'del-btn': {
-        en: 'Delete',
-        he: 'מחיקה'
+    'save': {
+        en: 'Save',
+        he: 'שמור'
     },
-    'update-btn': {
-        en: 'Update',
-        he: 'עידכון'
+    'download': {
+        en: 'Download',
+        he: 'הורד'
     },
-    'read-btn': {
-        en: 'Read',
-        he: 'קריאה'
+    'share': {
+        en: 'Share',
+        he: 'שתף'
     },
-    'update-price': {
-        en: 'Update Price',
-        he: 'עידכון מחיר'
+    'upload': {
+        en: 'Upload Img',
+        he: 'העלה תמונה'
     },
-    'save-rate': {
-        en: 'Save Rating',
-        he: 'שמור דירוג'
+    'more': {
+        en: 'more',
+        he: 'עוד'
     },
-    'rate-book': {
-        en: 'Rate The Book:',
-        he: 'דרג את הספר:'
+    'subject': {
+        en: 'Subject',
+        he: 'נושא'
     },
-    'new-price': {
-        en: 'New Price:',
-        he: 'מחיר חדש:'
+    'body': {
+        en: 'Message Body',
+        he: 'גוף ההודעה'
+    },
+    'close': {
+        en: 'Close',
+        he: 'סגור '
+    },
+    'submit': {
+        en: 'Submit',
+        he: 'שלח '
+    },
+    'meme': {
+        en: 'We are MEME GENERETOR',
+        he: 'הגעתם למחולל הממים '
+    },
+    'email-data1': {
+        en: 'Insert your own idea for meme and share it with your friends!',
+        he: 'תכניס את הממ שלך ותשתף עם חברים   '
+    },
+    'email-data2': {
+        en: 'Are you satisfied from website? Tell us by email:',
+        he: '  האם אתה מרוצה מהאתר? תספר תספר לנו על זה במייל!'
     }
-}
 
+}
 
 function getTrans(transKey) {
     var translation = gTrans[transKey][gCurrLang]
@@ -77,19 +97,9 @@ function doTrans() {
             el.innerText = trans
         }
     })
-
 }
-
 
 function setLang(lang) {
     gCurrLang = lang;
-}
-
-function formatNumOlder(num) {
-    return num.toLocaleString(gCurrLang);
-}
-
-function formatNum(num) {
-    return new Intl.NumberFormat(gCurrLang).format(num);
 }
 
