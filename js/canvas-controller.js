@@ -23,10 +23,10 @@ function initCanvas() {
 
 //UPLOAD CANVAS
 function drawMeme() {
-    drawImgFromlocal();
+    drawImg();
 }
 
-function drawImgFromlocal() {
+function drawImg() {
     var meme = getMeme();
     var img = new Image();
     var myImgMeme = getImgById(meme.selectedImgId);
@@ -279,7 +279,7 @@ function drag(ev) {
         drawSign();
     }
     if (gDragSticker) setPositionSticker(offsetX - movementX, offsetY - movementY);
-    drawImgFromlocal();
+    drawImg();
 }
 
 // STICKERS
@@ -340,25 +340,25 @@ function findOnSaveMemes(memeId) {
 
 
 
-// function onMoveUp() {
-//     // var currLineIdx = getCurrentLineIdx();
-//     setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y - 5)
-//     drawMeme();
-// }
+function onMoveUp() {
+    // var currLineIdx = getCurrentLineIdx();
+    setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y - 5)
+    drawMeme();
+}
 
-// function onMoveDown() {
-//     // var currLineIdx = getCurrentLineIdx();
-//     setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y + 5)
-//     drawMeme();
-// }
+function onMoveDown() {
+    // var currLineIdx = getCurrentLineIdx();
+    setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y + 5)
+    drawMeme();
+}
 
-// function onSwitchLines() {
-//     var meme = getMeme();
-//     if(meme.selectedLineIdx === 0) {
-//         if(meme.lines.length > 0) meme.selectedLineIdx = meme.lines.length-1;
-//     } else {
-//         meme.selectedLineIdx = meme.selectedLineIdx-1;
-//     }
-//     document.querySelector('.input-text').value = meme.lines[gMeme.selectedLineIdx].txt;
-// }
+function onSwitchLines() {
+    var meme = getMeme();
+    if(meme.selectedLineIdx === 0) {
+        if(meme.lines.length > 0) meme.selectedLineIdx = meme.lines.length-1;
+    } else {
+        meme.selectedLineIdx = meme.selectedLineIdx-1;
+    }
+    document.querySelector('.input-text').value = meme.lines[gMeme.selectedLineIdx].txt;
+}
 
