@@ -40,7 +40,8 @@ function onOpenMememsGallery() {
 function renderImgs() {
     var imgs = getImgsForDisplay();
     var strHtmls = imgs.map(function (img) {
-        return ` <img onclick="onChooseMeme(this)" class="meme" data-id=${img.id} src=${img.url}>`
+        return ` <img onclick="onChooseMeme(this)" class="meme" 
+        data-id=${img.id} src=${img.url} data-title= ${img.keywords}>`
     })
     document.querySelector('.image-gallery').innerHTML = strHtmls.join('')
 }
@@ -128,7 +129,7 @@ function onSubmitMail() {
     toggleModal();
     var subject = document.querySelector('.email-subject').value;
     var messBody = document.querySelector('.email-mess-body').value;
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=hilla7070@gmail.com&su=${subject}&body=${messBody}`);
+    window.open(`//mail.google.com/mail/?view=cm&fs=1&to=hilla7070@gmail.com&su=${subject}&body=${messBody}`);
 }
 
 function onSetLang(lang) {
@@ -146,27 +147,33 @@ const shareData = {
     text: 'The best website!',
     url: window.location.href,
 }
-  
+
 const btn = document.querySelector('.btn-web-share');
-  btn.addEventListener('click', async () => {
+btn.addEventListener('click', async () => {
     try {
-      await navigator.share(shareData)
-      console.log('MDN shared successfully');
-    } catch(err) {
+        await navigator.share(shareData)
+        console.log('MDN shared successfully');
+    } catch (err) {
         console.log('Error: ' + err);
     }
-  });
+});
 
 window.onscroll = function () { scrollFunction() };
-  function scrollFunction() {
-      var ellBtns = document.querySelectorAll('.btn-header');
-      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-          ellBtns.forEach(function (btn) {
-              btn.style.height = '50px';
-          })
-      } else {
-          ellBtns.forEach(function (btn) {
-              btn.style.height = '80px';
-          })
-      }
-  }
+function scrollFunction() {
+    var ellBtns = document.querySelectorAll('.btn-header');
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        ellBtns.forEach(function (btn) {
+            btn.style.height = '50px';
+        })
+    } else {
+        ellBtns.forEach(function (btn) {
+            btn.style.height = '80px';
+        })
+    }
+}
+
+
+// function onViewTitle(elImg) {
+//     var titleImg = [];
+//     titleImg = elImg.dataset.title;
+// }

@@ -127,7 +127,7 @@ canvas {
 }
 
 .meme-editor {
-    padding-top: 200px;
+    padding-top: 220px;
     position: relative;
     align-items: center;
     flex-direction: row;
@@ -156,6 +156,7 @@ canvas {
 .actions {
     flex-direction: column;
     justify-content: space-around;
+
 }
 
 .actions>* {
@@ -391,6 +392,19 @@ input[type="file"] {
     opacity: 0.5;
 }
 
+.img-title {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    transition: bottom 700ms;
+    -webkit-transition: bottom 700ms;
+    -moz-transition: bottom 700ms;
+    overflow-y: scroll;
+}
+
 /* FOOTER */
 
 .main-footer {
@@ -593,12 +607,11 @@ body.modal-open .modal {
         height: 350px;
     }
     .meme-editor {
-        padding-top: 30px;
         padding-bottom: 50px;
+        padding-top: 60px;
         flex-direction: column;
         height: 100%;
         margin-bottom: 20px;
-        padding-top: 60px;
     }
     .actions {
         padding-top: 20px;

@@ -2,6 +2,7 @@
 const KEY_MEMES = 'memes';
 var gMeme;
 var gColor = 'white';
+var gColorLine = 'black';
 var gFontFamily = 'impact';
 var gCurrLine = 0;
 var gId = 0;
@@ -11,6 +12,7 @@ var gMemes = [];
 function creatMeme(id) {
     gId = 0;
     gColor = 'white';
+    gColorLine = 'black';
     gFontFamily = 'impact';
     var canvasSize = getCanvasSize();
     var xPos = canvasSize.width / 2;
@@ -25,10 +27,12 @@ function creatMeme(id) {
                 size: 40,
                 align: 'center',
                 color: gColor,
+                colorLine: gColorLine,
                 font: gFontFamily,
                 x: xPos,
                 y: yPos,
-                widthTxt: 0
+                widthTxt: 0,
+                sign: false
             }
         ],
         selectedStickerIdx: -1,
@@ -49,6 +53,7 @@ function addLine() {
         size: 40,
         align: 'center',
         color: gColor,
+        colorLine: gColorLine,
         font: gFontFamily,
         x: xPos,
         y: pos,
@@ -56,6 +61,7 @@ function addLine() {
     }
     gMeme.lines.push(line);
 }
+
 
 function setMeme(meme) {
     gMeme = meme;
@@ -107,6 +113,13 @@ function setColor(newColor) {
         return;
     }
     gMeme.lines[gMeme.selectedLineIdx].color = newColor;
+}
+function setColorLine(newColor) {
+    if (gMeme.lines.length <= 0) {
+        gColorLine = newColor;
+        return;
+    }
+    gMeme.lines[gMeme.selectedLineIdx].colorLine = newColor;
 }
 
 function setFont(newFont) {
