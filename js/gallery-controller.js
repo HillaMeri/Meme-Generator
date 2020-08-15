@@ -119,6 +119,8 @@ function clearInput() {
 
 function toggleModal() {
     document.body.classList.toggle('modal-open');
+    var elModal = document.querySelector('.modal');
+    elModal.classList.add('slide-in-elliptic-right-bck');
 }
 
 function toggleMenu() {
