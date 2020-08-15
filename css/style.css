@@ -73,7 +73,6 @@ button a {
 /* HEADER  */
 .main-header {
     background-image: linear-gradient(to right, rgb(0, 106, 182), rgb(192, 1, 1));
-    /* background-image: linear-gradient(to right, rgb(14, 116, 187), rgb(213, 91, 119)); */
     border-radius: 10px;
     box-shadow: inset;
     position: fixed;
