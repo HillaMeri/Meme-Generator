@@ -42,9 +42,9 @@ body {
     margin: 0;
     height: 100%;
     min-height: 100%;
-    background-color: white;
     overflow: scrol;
-    background-color: rgb(236, 236, 236);
+    background-image: linear-gradient(to right, rgb(112, 112, 112), rgb(148, 148, 148));
+    color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,6 +55,8 @@ h1, h2, h3, h4, h5, h6 {
 button {
     outline: none;
     font-family: Atma;
+    cursor: pointer;
+    color: white;
 }
 
 button a {
@@ -92,7 +94,6 @@ button a {
 .main-nav button {
     background-color: transparent;
     color: #eef5f3;
-    cursor: pointer;
     border: none;
     width: 132px;
     height: 80px;
@@ -110,7 +111,6 @@ button a {
 .mobile-menu-btn, .mobile-close-btn {
     background-color: black;
     color: white;
-    cursor: pointer;
     transition: .3s;
 }
 
@@ -121,11 +121,12 @@ button a {
 /*CANVAS EDITOR  */
 
 canvas {
-    border: 3px solid rgb(14, 116, 187);
+    border: 5px solid rgb(14, 116, 187);
     display: block;
     margin-left: 30px;
     border-radius: 15px;
     margin: 0;
+    cursor: pointer;
 }
 
 .meme-editor {
@@ -135,7 +136,7 @@ canvas {
     flex-direction: row;
     height: 100vh;
     overflow: scroll;
-    padding-bottom: 150px;
+    padding-bottom: 100px;
 }
 
 .meme-editor::-webkit-scrollbar {
@@ -147,8 +148,8 @@ canvas {
 }
 
 .meme {
-    transition: opacity .4s;
     cursor: pointer;
+    transition: opacity .4s;
 }
 
 .meme:hover {
@@ -156,42 +157,75 @@ canvas {
 }
 
 .actions {
-    flex-direction: column;
-    justify-content: space-around;
+    grid-template-columns: repeat(5, 60px);
+    grid-template-rows: repeat(7, 60px);
+    gap: 5px;
+    padding-inline-start: 40px;
 }
 
 .actions>* {
     margin-bottom: 10px;
-}
-
-.action>* {
-    margin: 0 auto;
-}
-
-.actions button {
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 10px;
-    transition: .5s;
+    background-color: rgb(255, 255, 255);
+    color: rgb(12, 12, 12);
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color .3s;
+    font-size: 1.4rem;
 }
 
 .actions button:hover {
-    background-color: rgb(88, 88, 88);
+    background-color: rgb(255, 231, 109);
     opacity: 0.8;
 }
 
-.btn-final-action {
-    color: white;
-    border-radius: 20px;
-    transition: background-color .3;
-    cursor: pointer;
-    width: 120px;
+.input-text {
+    background-color: #ffffff;
+    grid-column: 1/6;
+    width: 90%;
+    margin: 0 auto;
+    outline: none;
+    font-size: 1.4rem;
 }
 
-.action16 {
-    visibility: hidden;
+.input-text:focus {
+    background-color: rgb(255, 231, 109);
+}
+
+.font-select {
+    grid-column: 1/4;
+    cursor: pointer;
+}
+
+.font-select:focus {
+    background-color: rgb(255, 231, 109);
+}
+
+.stickers {
+    grid-column: 1/6;
+    grid-row: 5/7;
+    overflow-y: auto;
+    align-items: center;
+}
+
+.stickers>* {
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.sticker-action {
+    grid-column: 1/3;
+    background-color: transparent;
+}
+
+.btn-size {
+    grid-column: 1/3;
+    background: transparent;
+    padding-top: 10px;
+}
+
+.range {
+    width: 80px;
 }
 
 .btn-save {
@@ -202,15 +236,15 @@ canvas {
     background-image: linear-gradient(to right, rgb(213, 91, 119), rgb(155, 9, 43));
 }
 
-.btn-share {
-    background-image: linear-gradient(to right, #0f90f2, #0365af);
+.btn-upload {
+    background-image: linear-gradient(to right, rgb(255, 221, 128), rgb(185, 166, 0));
 }
 
-.btn-upload {
-    background-image: linear-gradient(to right, rgb(255, 219, 121), rgb(217, 162, 7));
-    width: 200px;
-    margin: 0 auto;
-    color: white;
+.from-share {
+    cursor: pointer;
+    background-image: linear-gradient(to right, #0f90f2, #0365af);
+    border: 1px solid black;
+    font-size: 0.7rem;
 }
 
 input[type="file"] {
@@ -218,86 +252,24 @@ input[type="file"] {
     background-color: transparent;
     border: 0;
     opacity: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
-.btn-final-action:hover {
-    opacity: 0.7;
-}
-
-.stickers {
-    margin: 0 auto;
-    margin-bottom: 10px;
-    background: white;
-    border-radius: 25px;
-    padding: 20px;
-    border: 5px solid rgb(213, 91, 119);
-}
-
-.stickers>* {
-    width: 50px;
-    height: 50px;
+.file-input {
     cursor: pointer;
 }
 
-.sticker:hover {
-    opacity: 0.7;
-}
-
-.sticker-actions {
+.btn-share {
+    background: transparent;
+    border: 0;
     margin: 0 auto;
+    font-size: 1.4rem;
 }
 
-.sticker-actions>* {
+.btn-share:hover {
     background-color: transparent;
-}
-
-.btn-increase-sti {
-    color: rgb(41, 160, 67);
-}
-
-.btn-decreas-sti {
-    color: rgb(177, 0, 0);
-}
-
-.btn-remove-sti {
-    color: rgb(14, 116, 187);
-}
-
-.action11 {
-    border-radius: 20px;
-    padding: 10px;
-    outline: none;
-    cursor: pointer;
-}
-
-.action11:focus {
-    background-color: rgb(85, 85, 85);
-}
-
-.action12, .action3, .action4, .action5, .action8, .action11 , .action16, .action6, .action7 {
-    background-color: rgb(48, 48, 48);
-    padding-right: 20px;
-    padding-left: 20px;
-    color: white;
-}
-
-
-.input-text {
-    border-radius: 20px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    padding: 10px;
-    transition: background-color .3s;
-    outline: none;
-    width: 70%;
-}
-
-.input-text:focus {
-    background-color: rgb(255, 231, 109);
-}
-
-.upload {
-    text-align: center;
 }
 
 .btn-font {
@@ -308,10 +280,9 @@ input[type="file"] {
 
 .btn-trans {
     border-radius: 10px;
-    background-color: rgb(255, 231, 109);
+    background-color: rgb(0, 106, 182);
     transition: .3s;
     margin-bottom: 5px;
-    cursor: pointer;
 }
 
 .btn-trans:hover {
@@ -325,7 +296,6 @@ input[type="file"] {
 .image-gallery {
     height: 100%;
     margin-top: 20px;
-    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     grid-auto-rows: 220px;
     grid-gap: 10px;
@@ -354,14 +324,12 @@ input[type="file"] {
 }
 
 .key-words {
-    display: grid;
     grid-template-columns: repeat(6, 1fr);
 }
 
 .more-btn {
     background-color: rgb(10, 108, 179);
     border-radius: 20px;
-    cursor: pointer;
     transition: .3s;
 }
 
@@ -372,7 +340,6 @@ input[type="file"] {
 .btn-key {
     background-color: transparent;
     border: none;
-    cursor: pointer;
     outline: none;
     padding: 5px;
     transition: .3s;
@@ -391,24 +358,10 @@ input[type="file"] {
     transition: .3s;
     border: none;
     border-radius: 20px;
-    cursor: pointer;
 }
 
 .close-btn:hover {
     opacity: 0.5;
-}
-
-.img-title {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    transition: bottom 700ms;
-    -webkit-transition: bottom 700ms;
-    -moz-transition: bottom 700ms;
-    overflow-y: scroll;
 }
 
 /* FOOTER */
@@ -440,7 +393,6 @@ input[type="file"] {
 }
 
 .btn-web-share {
-    cursor: pointer;
     font-size: 0.7rem;
     background-color: rgb(207, 207, 207);
     border-radius: 20px;
@@ -483,6 +435,7 @@ input[type="file"] {
     background-size: cover;
     background-position: center;
     font-size: 1.2rem;
+    color: black;
 }
 
 .email {
@@ -512,11 +465,11 @@ input[type="file"] {
     border-radius: 10px;
     font-size: 1rem;
     margin: 10px;
-    cursor: pointer;
     outline: none;
     background: transparent;
     transition: .3s;
     border: 2px solid black;
+    color: black;
 }
 
 .btn-submit:hover {
@@ -536,6 +489,7 @@ input[type="file"] {
     background: transparent;
     transition: .3s;
     border: 2px solid black;
+    color: black;
 }
 
 .btn-close:hover {
@@ -609,11 +563,6 @@ body.modal-open .modal {
     body.menu-open .mobile-menu-btn {
         display: none;
     }
-    #canvas {
-        margin: 0 auto;
-        width: 350px;
-        height: 350px;
-    }
     .meme-editor {
         padding-bottom: 50px;
         padding-top: 60px;
@@ -666,31 +615,14 @@ body.modal-open .modal {
     }
     #canvas {
         margin: 0 auto;
-        width: 250px;
-        height: 250px;
-    }
-    .canvas-container {
-        margin: 0 auto;
-        width: 40vw;
-        height: 30vh;
+        width: 350px;
+        height: 350px;
     }
     .actions {
-        height: 50px;
-    }
-
-    .action16 {
-        visibility: visible;
-    }
-    .stickers>* {
-        width: 25px;
-        height: 25px;
-        cursor: pointer;
-    }
-    .btn-final-action .btn-upload {
-        font-size: 0.9rem;
-        padding: 0;
-        margin: 3px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(5, 40px);
+        grid-template-rows: repeat(7, 40px);
+        gap: 5px;
+        padding-left: 20px;
     }
     .gallery {
         padding-top: 30px;
@@ -701,12 +633,24 @@ body.modal-open .modal {
         grid-auto-rows: 120px;
     }
     .key-words {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+    .actions>* {
+        font-size: 1rem;
+    }
+    .btn-share {
+        font-size: 1rem;
+    }
+    .stickers>* {
+        font-size: 1.8rem
     }
 }
 
 /* HELPERS */
+
+.grid {
+    display: grid;
+}
 
 /* flex helpers */
 
@@ -744,200 +688,4 @@ body.modal-open .modal {
 
 body.rtl {
     direction: rtl;
-}
-
-/* ANIMATION */
-
-.slide-in-fwd-tr {
-    -webkit-animation: slide-in-fwd-tr 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: slide-in-fwd-tr 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@-webkit-keyframes slide-in-fwd-tr {
-    0% {
-        -webkit-transform: translateZ(-1400px) translateY(-800px) translateX(1000px);
-        transform: translateZ(-1400px) translateY(-800px) translateX(1000px);
-        opacity: 0;
-    }
-    100% {
-        -webkit-transform: translateZ(0) translateY(0) translateX(0);
-        transform: translateZ(0) translateY(0) translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-fwd-tr {
-    0% {
-        -webkit-transform: translateZ(-1400px) translateY(-800px) translateX(1000px);
-        transform: translateZ(-1400px) translateY(-800px) translateX(1000px);
-        opacity: 0;
-    }
-    100% {
-        -webkit-transform: translateZ(0) translateY(0) translateX(0);
-        transform: translateZ(0) translateY(0) translateX(0);
-        opacity: 1;
-    }
-}
-
-.bounce-in-top {
-    -webkit-animation: bounce-in-top 1.1s both;
-    animation: bounce-in-top 1.1s both;
-}
-
-@-webkit-keyframes bounce-in-top {
-    0% {
-        -webkit-transform: translateY(-500px);
-        transform: translateY(-500px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-        opacity: 0;
-    }
-    38% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-        opacity: 1;
-    }
-    55% {
-        -webkit-transform: translateY(-65px);
-        transform: translateY(-65px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    72% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-    81% {
-        -webkit-transform: translateY(-28px);
-        transform: translateY(-28px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    90% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-    95% {
-        -webkit-transform: translateY(-8px);
-        transform: translateY(-8px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    100% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-}
-
-@keyframes bounce-in-top {
-    0% {
-        -webkit-transform: translateY(-500px);
-        transform: translateY(-500px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-        opacity: 0;
-    }
-    38% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-        opacity: 1;
-    }
-    55% {
-        -webkit-transform: translateY(-65px);
-        transform: translateY(-65px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    72% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-    81% {
-        -webkit-transform: translateY(-28px);
-        transform: translateY(-28px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    90% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-    95% {
-        -webkit-transform: translateY(-8px);
-        transform: translateY(-8px);
-        -webkit-animation-timing-function: ease-in;
-        animation-timing-function: ease-in;
-    }
-    100% {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-        -webkit-animation-timing-function: ease-out;
-        animation-timing-function: ease-out;
-    }
-}
-
-.slide-in-elliptic-right-bck {
-    -webkit-animation: slide-in-elliptic-right-bck 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: slide-in-elliptic-right-bck 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-/* ----------------------------------------------
- * Generated by Animista on 2020-8-15 22:28:43
- * Licensed under FreeBSD License.
- * See http://animista.net/license for more info. 
- * w: http://animista.net, t: @cssanimista
- * ---------------------------------------------- */
-
-/**
- * ----------------------------------------
- * animation slide-in-elliptic-right-bck
- * ----------------------------------------
- */
-
-@-webkit-keyframes slide-in-elliptic-right-bck {
-    0% {
-        -webkit-transform: translateX(800px) rotateY(30deg) scale(6.5);
-        transform: translateX(800px) rotateY(30deg) scale(6.5);
-        -webkit-transform-origin: -100% 50%;
-        transform-origin: -100% 50%;
-        opacity: 0;
-    }
-    100% {
-        -webkit-transform: translateX(0) rotateY(0) scale(1);
-        transform: translateX(0) rotateY(0) scale(1);
-        -webkit-transform-origin: 600px 50%;
-        transform-origin: 600px 50%;
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-elliptic-right-bck {
-    0% {
-        -webkit-transform: translateX(800px) rotateY(30deg) scale(6.5);
-        transform: translateX(800px) rotateY(30deg) scale(6.5);
-        -webkit-transform-origin: -100% 50%;
-        transform-origin: -100% 50%;
-        opacity: 0;
-    }
-    100% {
-        -webkit-transform: translateX(0) rotateY(0) scale(1);
-        transform: translateX(0) rotateY(0) scale(1);
-        -webkit-transform-origin: 600px 50%;
-        transform-origin: 600px 50%;
-        opacity: 1;
-    }
 }

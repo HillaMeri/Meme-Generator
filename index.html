@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation.css">
     <script src="https://kit.fontawesome.com/1ed641f7ad.js" crossorigin="anonymous"></script>
     <link rel="icon" href="imgs/icongif.gif" type="image/gif" sizes="16x16">
     <title>MEME GENERATOR</title>
@@ -14,7 +15,7 @@
 <body id="body" onload="init()">
     <div class="screen" onclick="toggleMenu()"></div>
     <div class="modal">
-        <h2  data-trans="meme">We are MEME GENERETOR</h2>
+        <h2 data-trans="meme">We are MEME GENERETOR</h2>
         <p data-trans="email-data1">Insert your own idea for meme and share it with your friends!</p>
         <p data-trans="email-data2">Are you satisfied from website?
             Tell us by email:</p>
@@ -28,7 +29,8 @@
                 <textarea class="form-control email-mess-body" rows="3"></textarea>
             </div>
         </form>
-        <button data-trans="submit" class="btn-submit" onclick="onSubmitMail()" type="button" form="frmPref" value="Submit">Submit</button>
+        <button data-trans="submit" class="btn-submit" onclick="onSubmitMail()" type="button" form="frmPref"
+            value="Submit">Submit</button>
         <button data-trans="close" class="btn-close" onclick="toggleModal()">Close</button>
     </div>
 
@@ -45,89 +47,86 @@
         </div>
     </header>
 
-    <div class="meme-editor bounce-in-top display container flex">
+    <div class="meme-editor bounce-in-top display container flex space-between">
         <canvas id="canvas" width="450" height="450"></canvas>
-        <div class="actions flex">
-            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)"
-            class="input-text space-around action2"  data-trans="text-placeholder" placeholder="Your Text: " />
-            <div class="flex space-evenly">
-                <button class="action3" onclick="onAddLine()"><i class="fas fa-plus"></i></button>
-                <button class="action16" onclick="onSwitchLines()"><i class="fas fa-arrows-alt-v"></i></button>
-                <!-- <button class="action6" onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button> -->
-                <!-- <button class="action7" onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button> -->
-                <button class="action12" onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></button>
-            </div>
-            <div class="flex space-evenly">
-                <button class="action4" onclick="onIncrease()"><i class="fas fa-font"></i>+</button>
-                <button class="action5" onclick="onDecrease()"><i class="fas fa-font"></i>-</button>
-                <button class="action8 btn-color-fill" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
-                <button class="action9 color-fill display"> <input type="color" id="shape-color" name="contact"
-                        onchange="onChangeColor(this.value)" /></button>
-                <button class="action8 btn-color-line" onclick="onOpenColorsLine()"><i class="fas fa-paint-brush"></i></button>
-                <button class="action9 color-line display"> <input type="color" id="shape-color" name="contact"
-                        onchange="onChangeColorLine(this.value)" /></button>
-                <select class="action11 font-select" onclick="onChangeFont(this.value)">
-                    <option style="font-family: Impact" value="impact">Falafel פלאפל</option>
-                    <option style="font-family: Eurofurenceregular" value="Eurofurenceregular">Falafel פלאפל</option>
-                    <option style="font-family: Rowdies" value="Amatic_SC">Falafel פלאפל</option>
-                    <option style="font-family: Pacifico" value="Pacifico">Falafel פלאפל</option>
-                    <option style="font-family: Suez_One" value="Suez_One">Falafel פלאפל</option>
-                    <option style="font-family: CabinSketch" value="CabinSketch">Falafel פלאפל</option>
-                </select>
-            </div>
-            <div class="action1 stickers flex">
-                <img onclick="addSticker(this)" class="sticker" src="stickers/1.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/2.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/3.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/4.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/5.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/6.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/7.png" />
-                <img onclick="addSticker(this)" class="sticker" src="stickers/8.png" />
-            </div>
 
-            <div hidden class="flex sticker-actions align-center">
-               <label>Sticker</label>
-                <button class="btn-increase-sti" onclick="onIncreasStickers()"><i
-                        class="fas fa-plus-square"></i></button>
-                <button class="btn-decreas-sti" onclick="onDecreasStickers()"><i
-                        class="fas fa-minus-square"></i></button>
-                <button class="btn-remove-sti" onclick="onDeleteSticker()"><i class="fas fa-trash-alt"></i></button>
+        <div class="actions grid">
+            <input type="text" onkeyup="onWrite(this)" onkeypress="onWrite(this)" class="input-text "
+                data-trans="text-placeholder" placeholder="Your Text Here: " />
+            <button onclick="onAddLine()"><i class="fas fa-plus"></i></button>
+            <button onclick="onRemoveLine()"><i class="fas fa-trash-alt"></i></button>
+            <button onclick="onSwitchLines()"><i class="fas fa-arrows-alt-v"></i></button>
+            <button onclick="onMoveUp()"><i class="fas fa-arrow-up"></i></button>
+            <button onclick="onMoveDown()"><i class="fas fa-arrow-down"></i></button>
+            <label class="btn-size"><input class="range" type="range" id="size" name="size" min="20" max="80" value="40"
+                    onchange="onChangeSize(this.value);" />
+            </label>
+            <button onclick="onLeft()"><i class="fas fa-align-left"></i></button>
+            <button onclick="onCenter()"><i class="fas fa-align-center"></i></button>
+            <button onclick="onRigth()"><i class="fas fa-align-right"></i></button>
+            <select class="font-select" onclick="onChangeFont(this.value)">
+                <option style="font-family: Impact" value="impact">Falafel פלאפל</option>
+                <option style="font-family: Eurofurenceregular" value="Eurofurenceregular">Falafel פלאפל</option>
+                <option style="font-family: Rowdies" value="Amatic_SC">Falafel פלאפל</option>
+                <option style="font-family: Pacifico" value="Pacifico">Falafel פלאפל</option>
+                <option style="font-family: Suez_One" value="Suez_One">Falafel פלאפל</option>
+                <option style="font-family: CabinSketch" value="CabinSketch">Falafel פלאפל</option>
+            </select>
+            <button class="btn-color-fill" onclick="onOpenColors()"><i class="fas fa-palette"></i></button>
+            <button class="color-fill display"> <input type="color" id="shape-color" name="contact"
+                    onchange="onChangeColor(this.value)" /></button>
+            <button class=" btn-color-line" onclick="onOpenColorsLine()"><i class="fas fa-paint-brush"></i></button>
+            <button class=" color-line display"> <input type="color" id="shape-color" name="contact"
+                    onchange="onChangeColorLine(this.value)" /></button>
+            <div class="stickers flex space-between">
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">😅</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">😜</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">😍</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">😤</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">😡</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">🥶</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">🤐</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">🕶</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">💋</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">💩</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">☠️</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">👁</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">👙</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">🩲</label>
+                <label onclick="onCreateSticker(this.innerText)" class="sticker">👒</label>
             </div>
-
-            <div class="flex space-evenly">
-                <button data-trans="save" class="btn-save btn-final-action action13" onclick="onSave()">Save <i
-                        class="far fa-save"></i></button>
-                <button data-trans="download" class="btn-down btn-final-action action14"><a href="#" onclick="onDownload(this)"
-                        download="my-img.jpg">Download<i class="fas fa-download"></i></a></button>
-                <form class="btn-share btn-final-action action15" class="upload" action="" method="POST"
-                    enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                    <input name="img" id="imgData" type="hidden" />
-                    <button data-trans="share" class="btn-share btn-final-action" type="submit">Share <i
-                            class="fas fa-share-alt"></i></button>
-                    <div class="share-container"></div>
-                </form>
-            </div>
-            <button data-trans="upload" class="btn-upload"> <input type="file" class="file-input btn" name="image"
-                    onchange="onImgInput(event)" />Upload Img <i class="fas fa-upload"></i></button>
-            <!-- <button onclick="onSwitchLines()"><i class="fas fa-arrows-alt-v"></i></button> -->
+            <button class="btn-save" onclick="onSave()"> <i class="far fa-save"></i></button>
+            <button class="btn-down"><a href="#" onclick="onDownload(this)" download="my-img.jpg"><i
+                        class="fas fa-download"></i></a></button>
+            <form class="from-share" class="upload" action="" method="POST" enctype="multipart/form-data"
+                onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="btn-share" type="submit"> <i class="fas fa-share-alt"></i></button>
+                <div class="share-container"></div>
+            </form>
+            <button class="btn-upload"> <i class="fas fa-upload"></i>
+                <label hidden for="fileInput">
+                    <input type="file" class="file-input btn" name="image" id="fileInput" hidden
+                        onchange="onImgInput(event)" />
+                </label>
+            </button>
         </div>
     </div>
-    
-    
+
+
     <div class="gallery container slide-in-fwd-tr">
         <button type="button" value="he" class="btn-trans" onclick="onSetLang(this.value)">עברית</button>
         <button type="button" value="en" class="btn-trans" onclick="onSetLang(this.value)">English</button>
         <div class="search-section flex space-between">
             <div>
                 <label data-trans="search" for="search">Search</label>
-                <input onchange="onFilterKeyWord(this.value)" list="search" id="mysearch" autocomplete="off"
-                name="search" />
+                <input type="search" onchange="onFilterKeyWord(this.value)" list="search" id="mysearch"
+                    autocomplete="off" name="search" />
                 <datalist id="search"></datalist>
             </div>
-            <section class="key-words"></section>
+            <section class="key-words grid"></section>
         </div>
-        <div class="image-gallery container"></div>
+        <div class="image-gallery container grid"></div>
     </div>
 
     <footer class="main-footer space-between">
@@ -136,7 +135,6 @@
             <section class="social">
                 <a class="social-facebook" href="https://www.facebook.com/hilla.meri/" target="blank"><i
                         class="fab fa-facebook-square"></i></a>
-                <a class="social-twitter"><i class="fab fa-twitter-square"></i></a>
                 <a class="social-instagram" href="https://www.instagram.com/hillameri/" target="blank"><i
                         class="fab fa-instagram"></i></a>
             </section>

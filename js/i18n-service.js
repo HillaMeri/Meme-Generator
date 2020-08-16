@@ -81,16 +81,16 @@ var gTrans = {
 }
 
 function getTrans(transKey) {
-    var translation = gTrans[transKey][gCurrLang]
+    let translation = gTrans[transKey][gCurrLang]
     if (!translation) return gTrans[transKey].en
     return translation
 }
 
 function doTrans() {
-    var els = document.querySelectorAll('[data-trans]')
+    let els = document.querySelectorAll('[data-trans]')
     els.forEach(function (el) {
-        var transKey = el.dataset.trans
-        var trans = getTrans(transKey)
+        let transKey = el.dataset.trans
+        const trans = getTrans(transKey)
         if (el.nodeName === 'INPUT') {
             el.placeholder = trans
         } else {

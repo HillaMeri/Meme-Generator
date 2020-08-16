@@ -37,14 +37,14 @@ function getImgs() {
 
 function getImgsForDisplay() {
     if (gFilterBy === '') return gImgs;
-    var imgs = gImgs.filter(function (img) {
+    let imgs = gImgs.filter(function (img) {
         return (img.keywords.includes(gFilterBy))
     })
     return imgs;
 }
 
 function loadKeyWords() {
-    var keyWords = [];
+    let keyWords = [];
     gImgs.forEach((img) => {
         img.keywords.forEach((keyword) => {
             if (!keyWords.includes(keyword)) keyWords.push(keyword)
@@ -76,7 +76,7 @@ function setKeywordSearch(word) {
 }
 
 function addImg(url) {
-    var newImg = {
+    let newImg = {
         id: gImgs.length + 1,
         url: url,
         keywords: ['']

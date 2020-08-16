@@ -2,12 +2,9 @@
 var gCanvas;
 var gCtx;
 var gDrag = false;
-var gCurrLine;
-var gDragSticker = false;
 const STICER_SIZE = 60;
-var gStickerChoose;
 
-var gCurr = 0;
+
 
 function initCanvas() {
     gCanvas = document.querySelector('#canvas');
@@ -15,40 +12,39 @@ function initCanvas() {
     gCanvas.addEventListener("mousedown", startDrag);
     gCanvas.addEventListener("mousemove", drag);
     gCanvas.addEventListener("mouseup", finishDrag);
-    gCanvas.addEventListener("touchstart", startDrag);
+    gCanvas.addEventListener("touchmove", startDrag);
     gCanvas.addEventListener("touchmove", drag);
     gCanvas.addEventListener("touchend", finishDrag);
-}
 
+    if (window.innerWidth <= 550) {
+        gCanvas.width = 350;
+        gCanvas.height = 350;
+    }
+}
 
 //UPLOAD CANVAS
 function drawMeme() {
-    drawImg();
-}
-
-function drawImg() {
-    var meme = getMeme();
+    const meme = getMeme();
     var img = new Image();
     var myImgMeme = getImgById(meme.selectedImgId);
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height) //img,x,y,xend,yend
+        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         drawText();
-        drawStickers();
     }
     img.src = myImgMeme.url;
 }
 
 function drawText() {
-    var meme = getMeme();
+    const meme = getMeme();
     meme.lines.forEach((line) => {
-        var myText = line.txt;
-        var mySize = line.size;
-        var myAlign = line.align;
-        var myColor = line.color;
-        var myColorLine = line.colorLine;
-        var yPos = line.y;
-        var xPos = line.x;
-        var font = line.font;
+        const myText = line.txt;
+        let mySize = line.size;
+        let myAlign = line.align;
+        let myColor = line.color;
+        let myColorLine = line.colorLine;
+        let yPos = line.y;
+        let xPos = line.x;
+        let font = line.font;
         gCtx.lineWidth = '2';
         gCtx.strokeStyle = myColorLine;
         gCtx.fillStyle = myColor;
@@ -57,7 +53,6 @@ function drawText() {
         gCtx.fillText(myText, xPos, yPos);
         setWidthTxt(line.id, gCtx.measureText(myText).width);
         gCtx.strokeText(myText, xPos, yPos);
-        setPosition(line.id, xPos, yPos);
     })
 }
 
@@ -71,24 +66,21 @@ function renderCanvas(img) {
 
 // ACTIONS
 function onWrite(ev) {
-    setMemeText(ev.value);
+    // setMemeText(ev.value);
+    setNewType(ev.value, 'txt');
     drawMeme();
 }
 
 function onAddLine() {
-    var elTxtInput = document.querySelector('.input-text');
+    let elTxtInput = document.querySelector('.input-text');
     if (!elTxtInput.value) return;
     elTxtInput.value = '';
     addLine();
-}
-
-function onDecrease() {
-    setMemeTextSize(-1);
     drawMeme();
 }
 
-function onIncrease() {
-    setMemeTextSize(+1);
+function onChangeSize(newVal) {
+    setNewType(newVal, 'size');
     drawMeme();
 }
 
@@ -105,19 +97,20 @@ function onOpenColorsLine() {
 function onChangeColor(newColor) {
     document.querySelector('.btn-color-fill').classList.remove('display');
     document.querySelector('.color-fill').classList.add('display');
-    setColor(newColor)
+    setNewType(newColor, 'color');
     drawMeme();
 }
 
 function onChangeColorLine(newColor) {
     document.querySelector('.btn-color-line').classList.remove('display');
     document.querySelector('.color-line').classList.add('display');
-    setColorLine(newColor)
+    setNewType(newColor, 'colorLine');
     drawMeme();
 }
 
 function onChangeFont(newFont) {
-    setFont(newFont);
+    setNewType(newFont, 'font');
+    // setFont(newFont);
     drawMeme();
 }
 
@@ -126,17 +119,137 @@ function onRemoveLine() {
     drawMeme();
 }
 
+function onMoveUp() {
+    const currLine = getCurrentLine();
+    setPosition(currLine.x, currLine.y - 5)
+    drawMeme();
+}
+
+function onMoveDown() {
+    const currLine = getCurrentLine();
+    setPosition(currLine.x, currLine.y + 5)
+    drawMeme();
+}
+
+function onSwitchLines() {
+    const meme = getMeme();
+    if (meme.selectedLineIdx === 0) {
+        if (meme.lines.length > 0) meme.selectedLineIdx = meme.lines.length - 1;
+    } else {
+        meme.selectedLineIdx = meme.selectedLineIdx - 1;
+    }
+    document.querySelector('.input-text').value = meme.lines[gMeme.selectedLineIdx].txt;
+}
+
+function onRigth() {
+    const currLine = getCurrentLine();
+    setPosition(currLine.x + 5, currLine.y);
+    drawMeme();
+}
+
+function onLeft() {
+    const currLine = getCurrentLine();
+    setPosition(currLine.x - 5, currLine.y);
+    drawMeme();
+}
+
+function onCenter() {
+    const currLine = getCurrentLine();
+    setPosition(gCanvas.width / 2, currLine.y)
+    drawMeme();
+}
+
+// DRAG
+function drawSign() {
+    const currLineIdx = getCurrentIdx();
+    const meme = getMeme();
+    let width = meme.lines[currLineIdx].widthTxt;
+    let height = meme.lines[currLineIdx].size * 1.2;
+    let posX = meme.lines[currLineIdx].x - meme.lines[currLineIdx].widthTxt / 2;
+    let posY = meme.lines[currLineIdx].y - meme.lines[currLineIdx].size;
+    gCtx.beginPath();
+    gCtx.rect(posX, posY, width, height);
+    gCtx.strokeStyle = "black";
+    gCtx.fillStyle = "rgb(0, 0, 0, 0.25)";
+    gCtx.lineWidth = '2';
+    gCtx.strokeRect(posX, posY, width, height);
+    gCtx.fillRect(posX, posY, width, height);
+}
+
+
+function startDrag(ev) {
+    const meme = getMeme();
+    let { offsetX, offsetY } = ev;
+    if (ev.type === "touchmove") {
+        ev.preventDefault();
+        offsetX = ev.targetTouches[0].pageX;
+        offsetY = ev.targetTouches[0].pageY;
+        console.log(offsetX);
+        console.log(offsetY);
+    }
+    const clickedLine = meme.lines.find(line => {
+        return (offsetY <= line.y + line.size && offsetY >= line.y - line.size
+            && offsetX <= line.x + line.widthTxt && offsetX > line.x - line.widthTxt)
+    });
+
+    if (!clickedLine) return;
+    setCurrLineIdx(clickedLine.id);
+    gDrag = true;
+}
+
+function finishDrag(ev) {
+    if (!gDrag) return;
+    drawSign();
+    gDrag = false;
+}
+
+function drag(ev) {
+    if (!gDrag) return;
+    var { offsetX, offsetY } = ev;
+    if (ev.type === "touchmove") {
+        ev.preventDefault();
+        offsetX = ev.targetTouches[0].pageX;
+        offsetY = ev.targetTouches[0].pageY;
+    }
+    setPosition(offsetX, offsetY);
+    drawMeme();
+}
+
+// STICKERS
+function onCreateSticker(sticker) {
+    addSticker(gCanvas.width / 2, gCanvas.height / 2, sticker, STICER_SIZE);
+    drawMeme();
+}
+
+// SAVE MEMES 
+function onSaveMeme(elMeme) {
+    let memeId = elMeme.dataset.id;
+    let memeIdx = findOnSaveMemes(memeId);
+    let memes = loadFromStorage(KEY_MEMES);
+    gMeme = memes[memeIdx].gMeme;
+    openCanvas();
+    drawMeme();
+}
+
+function findOnSaveMemes(memeId) {
+    let memes = loadFromStorage(KEY_MEMES);
+    return memes.findIndex(meme => {
+        return meme.id === memeId;
+    })
+}
+
 // UPLOAD
 function uploadImg(elForm, ev) {
     ev.preventDefault();
     document.getElementById('imgData').value = gCanvas.toDataURL("image/jpeg");
-
-    var u = document.getElementById('imgData').src;
-    var t = document.getElementById('imgData').getAttribute.alt;
+    var imgSrc = document.getElementById('imgData').src;
+    var imgAlt = document.getElementById('imgData').getAttribute.alt;
     function onSuccess(uploadedImgUrl) {
         uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
         document.querySelector('.share-container').innerHTML = `
-        <a class="btn share" href="//www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}&t=${encodeURIComponent(t)}" title="Share on Facebook" target="_blank" onclick="window.open('//www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
+        <a class="btn share" href="//www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgSrc)}&t=${encodeURIComponent(imgAlt)}"
+        title="Share on Facebook" target="_blank" onclick="window.open('//www.facebook.com/sharer/sharer.php?u=
+        ${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
         Share   
         </a>`
     }
@@ -190,175 +303,3 @@ function loadImageFromInput(ev, onImageReady) {
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
-
-// DRAG
-function drawSign() {
-    var wid = gMeme.lines[gCurrLine].widthTxt * 2;
-    var hei = gMeme.lines[gCurrLine].size * 1.5;
-    var posX = gMeme.lines[gCurrLine].x / 2;
-    var posY = gMeme.lines[gCurrLine].y - gMeme.lines[gCurrLine].size;
-    gCtx.beginPath();
-    gCtx.rect(posX, posY, wid, hei);
-    gCtx.strokeStyle = "#b48484";
-    gCtx.lineWidth = '5';
-    gCtx.strokeRect(posX, posY, wid, hei)
-}
-
-
-function startDrag(ev) {
-    var meme = getMeme();
-    var { offsetX, offsetY } = ev;
-    if (ev.type === "touchstart") {
-        ev.preventDefault();
-        offsetX = ev.touches[0].pageX - ev.touches[0].target.offsetLeft;
-        offsetY = ev.touches[0].pageY - ev.touches[0].target.offsetTop;
-    }
-    const clickedLine = meme.lines.find(line => {
-        return (offsetY <= line.y && offsetY > line.y - line.size
-            && offsetX < line.x + line.widthTxt && offsetX > line.x - line.widthTxt)
-    });
-    const clickedSticker = meme.stickers.find(sticker => {
-        return (offsetY >= sticker.y && offsetY <= sticker.y + sticker.size
-            && offsetX >= sticker.x && offsetX <= sticker.x + sticker.size)
-    })
-    if (!clickedLine && !clickedSticker) return;
-    if (clickedLine) {
-        drawSign();
-        gCurrLine = clickedLine.id;
-        setCurrLineIdx(clickedLine.id);
-        gDrag = true;
-    }
-    else {
-        meme.selectedStickerIdx = clickedSticker.id;
-        // setStickerIdx(clickedSticker.id);
-        setMeme(meme);
-        gDragSticker = true;
-    }
-}
-
-function finishDrag(ev) {
-    if (!gDrag && !gDragSticker) return;
-    var offsetX;
-    var offsetY;
-    if (ev.type === "touchmove") {
-        ev.preventDefault();
-        offsetX = ev.touches[0].pageX - ev.touches[0].target.offsetLeft;
-        offsetY = ev.touches[0].pageY - ev.touches[0].target.offsetTop;
-    } else {
-        offsetX = ev.offsetX;
-        offsetY = ev.offsetY;
-    }
-    if (gDrag) {
-        setPosition(gCurrLine, offsetX, offsetY);
-        gDrag = false;
-    } else {
-        setPositionSticker(offsetX, offsetY)
-        gDragSticker = false;
-    }
-}
-
-
-function drag(ev) {
-    if (!gDrag && !gDragSticker) return;
-    var offsetX;
-    var offsetY;
-    var movementX;
-    var movementY;
-    if (ev.type === "touchmove") {
-        ev.preventDefault();
-        offsetX = ev.touches[0].pageX - ev.touches[0].target.offsetLeft;
-        offsetY = ev.touches[0].pageY - ev.touches[0].target.offsetTop;
-    } else {
-        offsetX = ev.offsetX;
-        offsetY = ev.offsetY;
-        movementX = ev.movementX;
-        movementY = ev.movementY;
-    }
-    if (gDrag) {
-        setPosition(gCurrLine, offsetX - movementX, offsetY - movementY);
-        drawSign();
-    }
-    if (gDragSticker) setPositionSticker(offsetX - movementX, offsetY - movementY);
-    drawImg();
-}
-
-// STICKERS
-function addSticker(el) {
-    var meme = getMeme();
-    meme.stickers.push(createSticker(meme.stickers.length, el.src, STICER_SIZE))
-    setMeme(meme);
-    var img = new Image();
-    img.onload = () => {
-        gCtx.drawImage(img, gCanvas.width / 2, gCanvas.height / 2, STICER_SIZE, STICER_SIZE)
-        drawText();
-    }
-    img.src = el.src;
-}
-
-function drawStickers() {
-    var meme = getMeme();
-    meme.stickers.forEach(sticker => {
-        var img = new Image();
-        img.onload = () => {
-            gCtx.drawImage(img, sticker.x, sticker.y, sticker.size, sticker.size)
-        }
-        img.src = sticker.url;
-    })
-}
-
-function onIncreasStickers() {
-    setStickersSize(10);
-    drawMeme();
-}
-
-function onDecreasStickers() {
-    setStickersSize(-10);
-    drawMeme();
-}
-
-function onDeleteSticker() {
-    deleteSticker();
-    drawMeme();
-}
-
-// SAVE MEMES 
-function onSaveMeme(elMeme) {
-    var memeId = elMeme.dataset.id;
-    var memeIdx = findOnSaveMemes(memeId);
-    var memes = loadFromStorage(KEY_MEMES);
-    gMeme = memes[memeIdx].gMeme;
-    openCanvas();
-    drawMeme();
-}
-
-function findOnSaveMemes(memeId) {
-    var memes = loadFromStorage(KEY_MEMES);
-    return memes.findIndex(meme => {
-        return meme.id === memeId;
-    })
-}
-
-
-
-function onMoveUp() {
-    // var currLineIdx = getCurrentLineIdx();
-    setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y - 5)
-    drawMeme();
-}
-
-function onMoveDown() {
-    // var currLineIdx = getCurrentLineIdx();
-    setPosition(gCurr, gMeme.lines[gCurr].x, gMeme.lines[0].y + 5)
-    drawMeme();
-}
-
-function onSwitchLines() {
-    var meme = getMeme();
-    if(meme.selectedLineIdx === 0) {
-        if(meme.lines.length > 0) meme.selectedLineIdx = meme.lines.length-1;
-    } else {
-        meme.selectedLineIdx = meme.selectedLineIdx-1;
-    }
-    document.querySelector('.input-text').value = meme.lines[gMeme.selectedLineIdx].txt;
-}
-
