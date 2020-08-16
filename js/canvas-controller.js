@@ -15,6 +15,7 @@ function initCanvas() {
     gCanvas.addEventListener("mousedown", startDrag);
     gCanvas.addEventListener("mousemove", drag);
     gCanvas.addEventListener("mouseup", finishDrag);
+    gCanvas.addEventListener("click", markSign);
     gCanvas.addEventListener("touchstart", startDrag);
     gCanvas.addEventListener("touchmove", drag);
     gCanvas.addEventListener("touchend", finishDrag);
@@ -192,6 +193,28 @@ function loadImageFromInput(ev, onImageReady) {
 }
 
 // DRAG
+
+function markSign(){
+    var meme = getMeme();
+    var { offsetX, offsetY } = ev;
+    if (ev.type === "touchstart") {
+        ev.preventDefault();
+        offsetX = ev.touches[0].pageX - ev.touches[0].target.offsetLeft;
+        offsetY = ev.touches[0].pageY - ev.touches[0].target.offsetTop;
+    }
+    const clickedLine = meme.lines.find(line => {
+        return (offsetY <= line.y && offsetY > line.y - line.size
+            && offsetX < line.x + line.widthTxt && offsetX > line.x - line.widthTxt)
+    });
+    if (!clickedLine && !clickedSticker) return;
+    if (clickedLine) {
+        drawSign();
+        gCurrLine = clickedLine.id;
+        setCurrLineIdx(clickedLine.id);
+    }
+
+}
+
 function drawSign() {
     var wid = gMeme.lines[gCurrLine].widthTxt * 2;
     var hei = gMeme.lines[gCurrLine].size * 1.5;
